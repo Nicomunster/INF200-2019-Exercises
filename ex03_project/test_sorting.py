@@ -2,6 +2,8 @@
 __author__ = 'Nicolai Munsterhjelm'
 __email__ = 'nicmunst@nmbu.no'
 
+import math
+
 
 def bubble_sort(data):
     """This function sorts a tuple or list of numbers using the bubble sort algorithm.
@@ -79,12 +81,13 @@ def test_sort_sorted():
 def test_sort_reversed():
     """Test that sorting works on reverse-sorted data."""
     data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    assert bubble_sort(data) == data.reverse()
+    assert bubble_sort(data) == list(reversed(data))
 
 
 def test_sort_all_equal():
     """Test that sorting handles data with identical elements."""
-    pass
+    data = [5, 5, 5, 5, 5, 5]
+    assert bubble_sort(data) == data
 
 
 def test_sorting():
@@ -95,4 +98,8 @@ def test_sorting():
     ensure that they are sorted correctly. These could be lists of
     numbers of different length or lists of strings.
     """
-    pass
+    test_lists = [['a', 'hello', '1234', ':)'], [],
+                  [1, 3, 4.2, 9999999, -34, math.pi, math.inf],
+                  [True, False, 2, -1, 0.5]]
+    for test_list in test_lists:
+        assert bubble_sort(test_list) == sorted(test_list)
