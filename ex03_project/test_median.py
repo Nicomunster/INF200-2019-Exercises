@@ -57,4 +57,12 @@ def test_unordered():
 
 
 def test_empty_list():
-    
+    """Tests that the median of an empty list raises a ValuError exception"""
+
+
+def test_original_unchanged():
+    """Tests that the median function leaves the original data unchanged"""
+
+
+def test_tuples_and_lists():
+    """Tests that the median function works for tuples as well as lists"""
