@@ -44,20 +44,30 @@ def test_even_number():
 def test_ordered():
     """Tests that the median function returns the correct value for lists
     with ordered elements"""
+    assert median([1, 2, 3, 4, 5, 6, 7]) == 4
+    assert median([10, 20]) == 15
+    assert median(-2, -1.5, 6) == -1.5
 
 
 def test_reverse_ordered():
     """Tests that the median function returns the correct value for
      reverse-ordered lists"""
+    assert median([7, 6, 5, 4, 3, 2, 1]) == 4
+    assert median([20, 10]) == 15
+    assert median(6, -1.5, -2) == -1.5
 
 
 def test_unordered():
     """Tests that the median function returns the correct value for
     unordered lists"""
+    assert median([7, 2, 6, 1, 5, 3, 4]) == 4
+    assert median([6, 2, 4, 2]) == 2
+    assert median([81, 2, 58, -5, 6]) == 6
 
 
 def test_empty_list():
-    """Tests that the median of an empty list raises a ValuError exception"""
+    """Tests that the median of an empty list raises a ValueError exception"""
+
 
 
 def test_original_unchanged():
