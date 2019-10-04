@@ -20,6 +20,10 @@ def median(data):
 
     sdata = sorted(data)
     n = len(sdata)
+
+    if n == 0:
+        raise ValueError("Median of empty list/tuple is not possible")
+
     return (sdata[n//2] if n % 2 == 1
             else 0.5 * (sdata[n//2 - 1] + sdata[n//2]))
 
@@ -69,13 +73,15 @@ def test_unordered():
 
 
 def test_empty_list():
-    """Tests that the median of an empty list raises a ValueError exception"""
+    """Tests that the median of an empty list raises a
+    ValueError exception"""
     with pytest.raises(ValueError):
         median([])
 
 
 def test_original_unchanged():
-    """Tests that the median function leaves the original data unchanged"""
+    """Tests that the median function leaves the
+    original data unchanged"""
     data = [7, 2, 6, 1, 5, 3, 4]
     med = median(data)
     assert data == [7, 2, 6, 1, 5, 3, 4]
