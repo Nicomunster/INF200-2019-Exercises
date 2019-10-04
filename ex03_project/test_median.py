@@ -75,7 +75,11 @@ def test_empty_list():
 
 def test_original_unchanged():
     """Tests that the median function leaves the original data unchanged"""
+    data = [7, 2, 6, 1, 5, 3, 4]
+    med = median(data)
+    assert data == [7, 2, 6, 1, 5, 3, 4]
 
 
 def test_tuples_and_lists():
     """Tests that the median function works for tuples as well as lists"""
+    
