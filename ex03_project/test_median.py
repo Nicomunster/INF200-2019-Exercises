@@ -9,6 +9,7 @@ __email__ = 'nicmunst@nmbu.no'
 
 import pytest
 
+
 def median(data):
     """
     Returns median of data.

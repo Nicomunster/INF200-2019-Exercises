@@ -7,7 +7,8 @@ import math
 
 
 def bubble_sort(data):
-    """This function sorts a tuple or list of numbers using the bubble sort algorithm.
+    """This function sorts a tuple or list of numbers using the
+     bubble sort algorithm.
 
     Parameters
     ----------
