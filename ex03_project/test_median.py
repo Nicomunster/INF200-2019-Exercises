@@ -7,6 +7,8 @@ __email__ = 'nicmunst@nmbu.no'
 # The source of the code for the median() function is the
 # INF200 Exercise 3 text by Yngve Mardal Moe.
 
+import pytest
+
 def median(data):
     """
     Returns median of data.
@@ -67,7 +69,8 @@ def test_unordered():
 
 def test_empty_list():
     """Tests that the median of an empty list raises a ValueError exception"""
-    
+    with pytest.raises(ValueError):
+        median([])
 
 
 def test_original_unchanged():
