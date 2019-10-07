@@ -17,7 +17,7 @@ def single_game(num_players):
     """
     num_moves = 0
     players = create_players(num_players)
-    while not game_ends(players)[0]:
+    while not game_ends(players):
         for player_num, position in enumerate(players):
             players[player_num] = one_move(position)
         num_moves += 1
@@ -109,9 +109,6 @@ def game_ends(players):
     """
 
     for player_num, position in enumerate(players):
-        if position < 90:
-            pass
+        if position >= 90:
+            return True
 
-        else:
-            winner = player_num
-            return True, winner
