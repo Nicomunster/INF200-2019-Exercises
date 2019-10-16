@@ -1,6 +1,7 @@
 import random
 from statistics import median, mean, stdev
 
+
 def single_game(num_players):
     """
     Returns duration of single game.
@@ -75,6 +76,10 @@ def create_players(n):
     """
     Creates a list of zeroes representing the starting position of players.
     """
+    if n < 1:
+        raise ValueError(
+            "Error: The number of players must be greater than zero.")
+
     return [0] * n
 
 
@@ -119,6 +124,7 @@ def game_ends(players):
     for player_num, position in enumerate(players):
         if position >= 90:
             return True
+
 
 if __name__ == '__main__':
     num_moves = multi_game_experiment(100, 4, 20)
