@@ -1,5 +1,5 @@
 import random
-
+from statistics import median, mean, stdev
 
 def single_game(num_players):
     """
@@ -41,6 +41,10 @@ def multiple_games(num_games, num_players):
     num_moves : list
         List with the numbedr of moves needed in each game.
     """
+    num_moves = []
+    for i in range(num_games):
+        num_moves.append(single_game(num_players))
+    return num_moves
 
 
 def multi_game_experiment(num_games, num_players, seed):
@@ -61,6 +65,10 @@ def multi_game_experiment(num_games, num_players, seed):
     num_moves : list
         List with the numbedr of moves needed in each game.
     """
+
+    random.seed(seed)
+    num_moves = multiple_games(num_games, num_players)
+    return num_moves
 
 
 def create_players(n):
@@ -112,3 +120,16 @@ def game_ends(players):
         if position >= 90:
             return True
 
+if __name__ == '__main__':
+    num_moves = multi_game_experiment(100, 4, 20)
+    minimum = min(num_moves)
+    maximum = max(num_moves)
+    medianen = median(num_moves)
+    gj_snitt = mean(num_moves)
+    std = stdev(num_moves)
+
+    print('Minimum :', minimum)
+    print('Maximum :', maximum)
+    print('Medianen :', medianen)
+    print('gj_snitt :', gj_snitt)
+    print('std :', std)
