@@ -68,12 +68,12 @@ class Simulation:
             The number of steps taken
         """
 
-        walker = Walker(self.start, self.home)
+        self.walker = Walker(self.start, self.home)
 
-        while not walker.is_at_home():
-            walker.move()
+        while not self.walker.is_at_home():
+            self.walker.move()
 
-        return walker.steps
+        return self.walker.steps
 
     def run_simulation(self, num_walks):
         """
@@ -96,24 +96,3 @@ class Simulation:
 
         return number_of_steps
 
-
-if __name__ == "__main__":
-    sim = Simulation(0, 10, 12345)
-    print("Start: 0, Home: 10, seed: 12345, number of steps:",
-          sim.run_simulation(20))
-    sim = Simulation(0, 10, 12345)
-    print("Start: 0, Home: 10, seed: 12345, number of steps:",
-          sim.run_simulation(20))
-    sim = Simulation(0, 10, 54321)
-    print("Start: 0, Home: 10, seed: 54321, number of steps:",
-          sim.run_simulation(20))
-
-    sim = Simulation(10, 0, 12345)
-    print("Start: 10, Home: 0, seed: 12345, number of steps:",
-          sim.run_simulation(20))
-    sim = Simulation(10, 0, 12345)
-    print("Start: 10, Home: 0, seed: 12345, number of steps:",
-          sim.run_simulation(20))
-    sim = Simulation(10, 0, 54321)
-    print("Start: 10, Home: 0, seed: 54321, number of steps:",
-          sim.run_simulation(20))
