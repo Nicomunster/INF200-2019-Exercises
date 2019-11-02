@@ -79,7 +79,8 @@ class BoundedSimulation(walker_sim.Simulation):
             The number of steps taken
         """
 
-        walker = BoundedWalker(self.start, self.home, self.left_limit, self.right_limit)
+        walker = BoundedWalker(self.start, self.home,
+                               self.left_limit, self.right_limit)
 
         while not walker.is_at_home():
             walker.move()

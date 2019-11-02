@@ -27,7 +27,6 @@ class LCGRand:
     def random_sequence(self, length):
         return RandIter(self, length)
 
-
     def infinite_random_sequence(self):
         """
         Generate an infinite sequence of random numbers.
@@ -115,14 +114,3 @@ class ListRand:
         list_number = self.numbers[self.index]
         self.index += 1
         return list_number
-
-
-if __name__ == "__main__":
-    generator = LCGRand(1)
-    for rand in generator.random_sequence(10):
-        print(rand)
-
-    for i, rand in generator.infinite_random_sequence():
-        print(f'The {i}-th random number is {rand}')
-        if i > 100:
-            break
