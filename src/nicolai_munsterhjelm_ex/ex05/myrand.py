@@ -25,6 +25,8 @@ class LCGRand:
         return self.hidden_state
 
     def random_sequence(self, length):
+        """Generates an iterable sequence of random numbers
+        with the specified length."""
         return RandIter(self, length)
 
     def infinite_random_sequence(self):
