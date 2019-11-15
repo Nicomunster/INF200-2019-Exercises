@@ -17,6 +17,7 @@ class Board:
         self.ladders = dict(ladders)
         self.chutes = dict(chutes)
         self.goal = goal
+        self.chute_last = False
 
     def goal_reached(self, position):
         return position >= 90
@@ -25,6 +26,7 @@ class Board:
         if position in self.ladders.keys():
             return self.ladders[position] - position
         elif position in self.chutes.keys():
+            self.chute_last = True
             return self.chutes[position] - position
         return 0
 
@@ -76,9 +78,26 @@ player constructor must receive the board as argument:
    the following move and, if necessary, a move up a ladder or down a
    chute. It does not return anything.
 """
-class ResilientPlayer:
-    def __init__(self):
-        pass
+class ResilientPlayer(Player):
+    def __init__(self, board_instance, extra_steps=None):
+        if extra_steps is None:
+            extra_steps = 1
+        self.extra_steps = extra_steps
+        super().__init__(board_instance)
+
+    def move(self):
+        roll = random.randint(1, 6)
+        middle_position = self.position + roll
+        self.position = \
+            self.board_instance.position_adjustment(middle_position)
+
+
+    def resiliant_move(self):
+        super().move()
+
+        if self.chutes_last == True:
+
+
 """
 ``ResilientPlayer`` class
 ~~~~~~~~~~~~~~~~~~~~~~~~~
