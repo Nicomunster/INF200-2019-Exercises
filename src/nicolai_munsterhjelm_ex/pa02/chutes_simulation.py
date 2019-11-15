@@ -3,6 +3,7 @@
 __author__ = 'Alf Georg Ovland', 'Nicolai Munsterhjelm'
 __email__ = 'alov@nmbu.no', 'nicmunst@nmbu.no'
 
+import random
 
 class Board:
     def __init__(self, ladders=None, chutes=None, goal=90):
@@ -47,8 +48,17 @@ and the goal.
    0.
 """
 class Player:
-    def __init__(self):
-        pass
+    def __init__(self, board_instance):
+        self.board_instance = board_instance
+        self.position = 0
+    def move(self):
+        roll = random.randint(1, 6)
+        middle_position = self.position + roll
+        self.position = \
+            self.board_instance.position_adjustment(middle_position)
+
+
+
 """
 ``Player`` class
 ----------------
