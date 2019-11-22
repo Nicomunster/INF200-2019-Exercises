@@ -86,8 +86,7 @@ class ResilientPlayer(Player):
             extra_steps = 1
         self.extra_steps = extra_steps
         self.chute_last = False
-        self.board_instance = board_instance
-        super().__init__(self.board_instance)
+        super().__init__(board_instance)
 
     def move(self):
 
@@ -115,14 +114,13 @@ of extra steps is provided as an argument to the constructor, default is
 die and before snakes and ladders are checked.
 
 """
-class LazyPlayer:
+class LazyPlayer(Player):
     def __init__(self, board_instance, dropped_steps=None):
         if dropped_steps is None:
             dropped_steps = 1
         self.dropped_steps = abs(dropped_steps)
         self.ladder_last = False
-        self.board_instance = board_instance
-        super().__init__(self.board_instance)
+        super().__init__(board_instance)
 
     def move(self):
         roll = random.randint(1, 6)
@@ -157,7 +155,73 @@ stays in place.
 
 """
 class Simulation:
-    def __init__(self):
+    def __init__(
+            self, player_field, board=None,
+            seed=None, randomize_players=False
+    ):
+        if board is None:
+            board = Board()
+
+    def single_game(self):
+        """
+        Plays a single game
+        Returns
+        -------
+        Tuple : (turns , winning player type)
+
+        """
+        pass
+
+    def run_simulation(self, num_games):
+        """
+        Runs simulation for given number of games
+        stores result in the simulation-object as a
+        list: [(turns , winning player type)]
+        Parameters
+        ----------
+        num_games : Number of games to be simulated
+
+        """
+        pass
+
+    def get_results(self):
+        """
+        Collects and returns all results from
+         run_simulation as a list of tuples
+        Returns
+        -------
+        list: [(turns, winning player type), .....]
+        """
+        pass
+
+    def winners_per_type(self):
+        """
+        Returns a dictionary mapping player types to
+        the number of wins
+        Returns
+        -------
+        dict:{'Player type' : number of wins, ......}
+        """
+        pass
+
+    def durations_per_type(self):
+        """
+        Returns a dictionary mapping player types to
+        lists of game durations for that type
+        Returns
+        -------
+        dict: {'Player type': [num turns of games won, .....]}
+        """
+        pass
+
+    def players_per_type(self):
+        """
+        Returns a dictionary showing how many players of
+        each type participate
+        Returns
+        -------
+        dict: {'Player type': number of that type participating}
+        """
         pass
 """
 
