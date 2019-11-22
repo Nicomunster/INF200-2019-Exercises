@@ -79,3 +79,9 @@ class TestSimulation:
         b = cs.Board()
         s = cs.Simulation([cs.Player, cs.LazyPlayer, cs.ResilientPlayer])
         assert type(s.single_game()) == tuple
+
+    def test_run_simulation(self):
+        b = cs.Board()
+        s = cs.Simulation([cs.Player, cs.LazyPlayer, cs.ResilientPlayer])
+        s.run_simulation(5)
+        assert len(s.winning_list) == 5
