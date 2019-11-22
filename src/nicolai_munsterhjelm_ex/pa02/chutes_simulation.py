@@ -88,16 +88,23 @@ class ResilientPlayer(Player):
         if extra_steps is None:
             extra_steps = 1
         self.extra_steps = extra_steps
+        self.chute_last = False
         self.board_instance = board_instance
         super().__init__(self.board_instance)
 
     def move(self):
+
         roll = random.randint(1, 6)
         self.position += roll
-        if self.board_instance.chute_last:
+        if self.chute_last:
             self.position += self.extra_steps
+            self.chute_last = False
+        pre_adjust = self.position
         self.position = \
             self.board_instance.position_adjustment(self.position)
+        if pre_adjust > self.position:
+            self.chute_last = True
+        # self.step += 1
 
 
 
