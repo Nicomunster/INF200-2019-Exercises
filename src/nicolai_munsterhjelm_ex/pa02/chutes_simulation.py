@@ -165,6 +165,7 @@ class Simulation:
         self.board = board
         self.seed = seed
         self.randomize_players = randomize_players
+        self.winning_list = []
 
     def single_game(self):
         """
@@ -191,8 +192,9 @@ class Simulation:
         ----------
         num_games : Number of games to be simulated
         """
-        
-        pass
+
+        for game in range(num_games):
+            self.winning_list.append(self.single_game())
 
     def get_results(self):
         """
@@ -279,3 +281,6 @@ The class has the following methods:
    each type participate, e.g.,
    ``{'Player': 3, 'LazyPlayer': 1, 'ResilientPlayer': 0}``
 """
+
+s = Simulation([Player, LazyPlayer, ResilientPlayer])
+s.run_simulation(10)
