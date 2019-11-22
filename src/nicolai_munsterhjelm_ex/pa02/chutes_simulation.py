@@ -33,38 +33,41 @@ class Board:
         return position >= 90
 
     def position_adjustment(self, position):
+        """
+        Checks if the input position is at the start of a chute or a ladder.
+        Parameters
+        ----------
+        position: int
+
+        Returns
+        -------
+        int: Number of moves to adjust according to chutes and ladders list.
+        If it isn't at the start of a chute og ladder it returns zero
+        """
         if position in self.ladders.keys():
             return self.ladders[position] - position
         elif position in self.chutes.keys():
             return self.chutes[position] - position
         return 0
 
-"""
-`Board`` class
----------------
 
-The ``Board`` class shall manage all information about ladders, snakes,
-and the goal.
-
-1. If no parameters are given to the ``Board`` constructor, it shall
-   create a standard board, with the snakes, ladders, and goal as in
-   PA01.
-2. Method ``goal_reached()`` shall return true if it is passed a
-   position at or beyond the goal.
-3. Method ``position_adjustment()`` shall handle changes in position due
-   to snakes and ladders. It accepts a position as argument and returns
-   the number of positions the player must move forward (in case of a
-   ladder) or backward (chute), to get to the correct position. If the
-   player is not at the start of a chute or ladder, the method returns
-   0.
-"""
 class Player:
     def __init__(self, board_instance):
+        """
+        Creates a player constrained to a board instance.
+        Parameters
+        ----------
+        board_instance: class instance of Board
+        """
         self.board_instance = board_instance
         self.position = 0
         self.turns = 0
 
     def move(self):
+        """
+        Handles a dice cast and checks if it lands on a chute or a ladder
+        and updates position accordingly.
+        """
         roll = random.randint(1, 6)
         self.position += roll
         self.position += \
@@ -73,26 +76,18 @@ class Player:
 
 
 
-"""
-``Player`` class
-----------------
 
-The ``Player`` class and its subclasses manage information about player
-position, including information on which board a player “lives”. 1. The
-player constructor must receive the board as argument:
-
-.. code:: python
-
-           board = Board()
-           player = Player(board)
-
-1. The ``move()`` method moves the player by implementing a die cast,
-   the following move and, if necessary, a move up a ladder or down a
-   chute. It does not return anything.
-"""
 
 class ResilientPlayer(Player):
     def __init__(self, board_instance, extra_steps=None):
+        """
+        Subclass of Player. takes extra steps next move
+         if it goes down a chute.
+        Parameters
+        ----------
+        board_instance: Class instance of Board
+        extra_steps: int (number of extra steps)
+        """
         if extra_steps is None:
             extra_steps = 1
         self.extra_steps = extra_steps
@@ -100,7 +95,10 @@ class ResilientPlayer(Player):
         super().__init__(board_instance)
 
     def move(self):
-
+        """
+        Modified version of move from superclass Player.
+        Handles the extra steps and updates position accordingly.
+        """
         roll = random.randint(1, 6)
         self.position += roll
         if self.chute_last:
@@ -113,20 +111,17 @@ class ResilientPlayer(Player):
             self.chute_last = True
         self.turns += 1
 
-"""
-``ResilientPlayer`` class
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is a subclass of ``Player`` with slightly different moving
-behavior: When a resilient player slips down a chute, he will take extra
-steps in the next move, in addition to the roll of the die. The number
-of extra steps is provided as an argument to the constructor, default is
-1. Extra steps are taken immediately after the steps prescribed by the
-die and before snakes and ladders are checked.
-
-"""
 class LazyPlayer(Player):
     def __init__(self, board_instance, dropped_steps=None):
+        """
+        Subclass of Player. Drop steps next move
+         if it goes up a ladder. It will not go backwards,
+         only subtract the dropped steps from the dice roll.
+        Parameters
+        ----------
+        board_instance: Class instance of Board
+        dropped_steps: int (number of dropped steps)
+        """
         if dropped_steps is None:
             dropped_steps = 1
         self.dropped_steps = abs(dropped_steps)
@@ -134,6 +129,13 @@ class LazyPlayer(Player):
         super().__init__(board_instance)
 
     def move(self):
+        """
+        Modified version of move from superclass Player.
+        Handles the dropped steps and updates position accordingly.
+        Returns
+        -------
+
+        """
         roll = random.randint(1, 6)
         start_position = self.position
 
@@ -152,30 +154,28 @@ class LazyPlayer(Player):
 
         self.turns += 1
 
-"""
 
-``LazyPlayer`` class
-~~~~~~~~~~~~~~~~~~~~
-
-This is a subclass of ``Player`` as well. After climbing a ladder, a
-lazy player drops a given number of steps. The number of dropped steps
-is an optional argument to the constructor, default is 1. The player
-never moves backward: if, e.g., the die cast results in 1 step and the
-player is to drop 3 steps, the player does not move -2 steps but just
-stays in place.
-
-"""
 class Simulation:
     def __init__(
             self, player_field, board=None,
             seed=None, randomize_players=False
     ):
+        """
+        Handles the simulation part of the task.
+        Parameters
+        ----------
+        player_field: List (types of players)
+        board: Class instance of Board
+        seed: int (sets the seed of random functions)
+        randomize_players: bool (choose if players should be shuffled)
+        """
         if board is None:
             board = Board()
         self.player_field = player_field
         self.board = board
         self.seed = seed
-        self.randomize_players = randomize_players
+        if randomize_players:
+            random.shuffle(self.player_field)
         self.winning_list = []
 
     def single_game(self):
