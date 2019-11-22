@@ -17,20 +17,14 @@ class Board:
         self.ladders = dict(ladders)
         self.chutes = dict(chutes)
         self.goal = goal
-        #self.chute_last = False
-        #self.ladder_last = False
 
     def goal_reached(self, position):
         return position >= 90
 
     def position_adjustment(self, position):
-        #self.chute_last = False
-        #self.ladder_last = False
         if position in self.ladders.keys():
-            #self.ladder_last = True
             return self.ladders[position] - position
         elif position in self.chutes.keys():
-            #self.chute_last = True
             return self.chutes[position] - position
         return 0
 
@@ -57,11 +51,14 @@ class Player:
     def __init__(self, board_instance):
         self.board_instance = board_instance
         self.position = 0
+        self.turns = 0
+
     def move(self):
         roll = random.randint(1, 6)
         self.position += roll
         self.position = \
             self.board_instance.position_adjustment(self.position)
+        self.turns += 1
 
 
 
@@ -104,7 +101,7 @@ class ResilientPlayer(Player):
             self.board_instance.position_adjustment(self.position)
         if pre_adjust > self.position:
             self.chute_last = True
-        # self.step += 1
+        self.turns += 1
 
 """
 ``ResilientPlayer`` class
@@ -143,6 +140,8 @@ class LazyPlayer:
 
         if self.position > intermediate_position:
             self.ladder_last = True
+
+        self.turns += 1
 
 """
 
