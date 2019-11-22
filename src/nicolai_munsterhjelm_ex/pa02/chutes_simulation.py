@@ -17,17 +17,20 @@ class Board:
         self.ladders = dict(ladders)
         self.chutes = dict(chutes)
         self.goal = goal
-        self.chute_last = False
+        #self.chute_last = False
+        #self.ladder_last = False
 
     def goal_reached(self, position):
         return position >= 90
 
     def position_adjustment(self, position):
-        self.chute_last = False
+        #self.chute_last = False
+        #self.ladder_last = False
         if position in self.ladders.keys():
+            #self.ladder_last = True
             return self.ladders[position] - position
         elif position in self.chutes.keys():
-            self.chute_last = True
+            #self.chute_last = True
             return self.chutes[position] - position
         return 0
 
@@ -111,8 +114,24 @@ die and before snakes and ladders are checked.
 
 """
 class LazyPlayer:
-    def __init__(self):
-        pass
+    def __init__(self, board_instance, back_steps=None):
+        if back_steps is None:
+            back_steps = 1
+        self.back_steps = abs(back_steps)
+        self.board_instance = board_instance
+        super().__init__(self.board_instance)
+
+    def move(self):
+        roll = random.randint(1, 6)
+        if self.board_instance.ladder_last:
+            lazy_move = roll - self.back_steps
+            if lazy_move < 0:
+                return
+            else:
+                self.position += (roll - self.back_steps)
+
+        self.position = \
+            self.board_instance.position_adjustment(self.position)
 """
 
 ``LazyPlayer`` class
