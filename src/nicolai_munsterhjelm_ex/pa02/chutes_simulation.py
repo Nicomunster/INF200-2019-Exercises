@@ -204,7 +204,7 @@ class Simulation:
         -------
         list: [(turns, winning player type), .....]
         """
-        pass
+        return self.winning_list
 
     def winners_per_type(self):
         """
