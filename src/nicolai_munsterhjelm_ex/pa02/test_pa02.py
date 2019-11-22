@@ -78,3 +78,4 @@ class TestSimulation:
     def test_single_game(self):
         b = cs.Board()
         s = cs.Simulation([cs.Player, cs.LazyPlayer, cs.ResilientPlayer])
+        assert type(s.single_game()) == tuple
