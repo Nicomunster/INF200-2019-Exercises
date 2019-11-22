@@ -218,8 +218,6 @@ class Simulation:
         
         return dict(Counter(elem[1] for elem in self.winning_list))
 
-
-
     def durations_per_type(self):
         """
         Returns a dictionary mapping player types to
@@ -228,7 +226,18 @@ class Simulation:
         -------
         dict: {'Player type': [num turns of games won, .....]}
         """
-        pass
+        player_turn_count = {}
+
+        for winning_tuple in self.winning_list:
+            num_turns = winning_tuple[0]
+            player = winning_tuple[1]
+
+            if player not in player_turn_count:
+                player_turn_count[player] = [num_turns]
+            else:
+                player_turn_count[player].append(num_turns)
+
+        return player_turn_count
 
     def players_per_type(self):
         """
