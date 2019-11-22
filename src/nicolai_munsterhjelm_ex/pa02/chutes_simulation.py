@@ -106,8 +106,6 @@ class ResilientPlayer(Player):
             self.chute_last = True
         # self.step += 1
 
-
-
 """
 ``ResilientPlayer`` class
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,24 +119,31 @@ die and before snakes and ladders are checked.
 
 """
 class LazyPlayer:
-    def __init__(self, board_instance, back_steps=None):
-        if back_steps is None:
-            back_steps = 1
-        self.back_steps = abs(back_steps)
+    def __init__(self, board_instance, dropped_steps=None):
+        if dropped_steps is None:
+            dropped_steps = 1
+        self.dropped_steps = abs(dropped_steps)
+        self.ladder_last = False
         self.board_instance = board_instance
         super().__init__(self.board_instance)
 
     def move(self):
         roll = random.randint(1, 6)
-        if self.board_instance.ladder_last:
-            lazy_move = roll - self.back_steps
-            if lazy_move < 0:
-                return
-            else:
-                self.position += (roll - self.back_steps)
+        start_position = self.position
+
+        if self.ladder_last:
+            intermediate_position = start_position + roll - self.dropped_steps
+            if intermediate_position < start_position:
+                intermediate_position = start_position
+        else:
+            intermediate_position = start_position + roll
 
         self.position = \
-            self.board_instance.position_adjustment(self.position)
+            self.board_instance.position_adjustment(intermediate_position)
+
+        if self.position > intermediate_position:
+            self.ladder_last = True
+
 """
 
 ``LazyPlayer`` class
