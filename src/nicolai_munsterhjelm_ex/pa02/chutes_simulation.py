@@ -8,6 +8,14 @@ from collections import Counter
 
 class Board:
     def __init__(self, ladders=None, chutes=None, goal=90):
+        """
+        Board manages all information about ladders, chutes, and the goal.
+        Parameters
+        ----------
+        ladders: list of tuples
+        chutes: list of tuples
+        goal: int
+        """
         if ladders is None:
             ladders = [(1, 40), (8, 10), (36, 52), (43, 62), (49, 79),
                        (65, 82), (68, 85)]
@@ -20,6 +28,8 @@ class Board:
         self.goal = goal
 
     def goal_reached(self, position):
+        """Returns True if position is greater or equal to 90.
+        """
         return position >= 90
 
     def position_adjustment(self, position):
@@ -247,7 +257,8 @@ class Simulation:
         -------
         dict: {'Player type': number of that type participating}
         """
-        pass
+        return dict(Counter(player.__name__
+                    for player in self.player_field))
 """
 
 ``Simulation`` class
@@ -296,7 +307,5 @@ The class has the following methods:
 """
 
 s = Simulation([Player, LazyPlayer, ResilientPlayer])
-s.run_simulation(10)
-r = s.get_results()
-s.run_simulation(1)
-print(s.winners_per_type())
+p = s.players_per_type()
+print(p)
