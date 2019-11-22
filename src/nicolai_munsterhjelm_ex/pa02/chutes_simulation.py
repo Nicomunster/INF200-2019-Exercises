@@ -4,6 +4,7 @@ __author__ = 'Alf Georg Ovland', 'Nicolai Munsterhjelm'
 __email__ = 'alov@nmbu.no', 'nicmunst@nmbu.no'
 
 import random
+from collections import Counter
 
 class Board:
     def __init__(self, ladders=None, chutes=None, goal=90):
@@ -214,7 +215,10 @@ class Simulation:
         -------
         dict:{'Player type' : number of wins, ......}
         """
-        pass
+        
+        return dict(Counter(elem[1] for elem in self.winning_list))
+
+
 
     def durations_per_type(self):
         """
@@ -284,3 +288,6 @@ The class has the following methods:
 
 s = Simulation([Player, LazyPlayer, ResilientPlayer])
 s.run_simulation(10)
+r = s.get_results()
+s.run_simulation(1)
+print(s.winners_per_type())
