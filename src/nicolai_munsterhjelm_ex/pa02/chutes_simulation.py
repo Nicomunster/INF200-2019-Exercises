@@ -56,7 +56,7 @@ class Player:
     def move(self):
         roll = random.randint(1, 6)
         self.position += roll
-        self.position = \
+        self.position += \
             self.board_instance.position_adjustment(self.position)
         self.turns += 1
 
@@ -96,7 +96,7 @@ class ResilientPlayer(Player):
             self.position += self.extra_steps
             self.chute_last = False
         pre_adjust = self.position
-        self.position = \
+        self.position += \
             self.board_instance.position_adjustment(self.position)
         if pre_adjust > self.position:
             self.chute_last = True
@@ -133,7 +133,7 @@ class LazyPlayer(Player):
         else:
             intermediate_position = start_position + roll
 
-        self.position = \
+        self.position += \
             self.board_instance.position_adjustment(intermediate_position)
 
         if self.position > intermediate_position:
@@ -161,6 +161,10 @@ class Simulation:
     ):
         if board is None:
             board = Board()
+        self.player_field = player_field
+        self.board = board
+        self.seed = seed
+        self.randomize_players = randomize_players
 
     def single_game(self):
         """
@@ -168,9 +172,15 @@ class Simulation:
         Returns
         -------
         Tuple : (turns , winning player type)
-
         """
-        pass
+
+        players = [cl(self.board) for cl in self.player_field]
+
+        while True:
+            for player in players:
+                player.move()
+                if self.board.goal_reached(player.position):
+                    return player.turns, player.__class__.__name__
 
     def run_simulation(self, num_games):
         """
@@ -180,8 +190,8 @@ class Simulation:
         Parameters
         ----------
         num_games : Number of games to be simulated
-
         """
+        
         pass
 
     def get_results(self):
